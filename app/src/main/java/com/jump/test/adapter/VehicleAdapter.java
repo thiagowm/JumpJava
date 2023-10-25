@@ -1,26 +1,32 @@
 package com.jump.test.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jump.test.R;
+import com.jump.test.VehicleDetailsActivity;
+import com.jump.test.model.Vehicle;
 import com.jump.test.model.Vehicles;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleHolder> {
 
     Context context;
-    ArrayList<Vehicles> vehicles;
+    List<Vehicle> vehicles;
     private OnItemClickListener mListener;
 
-    public VehicleAdapter(Context c, ArrayList<Vehicles> v ){
+    public VehicleAdapter(Context c, ArrayList<Vehicle> v ){
         context = c;
         vehicles = v;
     }
@@ -32,17 +38,24 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleH
         mListener = listener;
     }
 
-    @NonNull
     @Override
-    public VehicleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VehicleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new VehicleHolder( LayoutInflater.from( parent.getContext() ).inflate(R.layout.row_vehicles, parent, false ) );
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull VehicleHolder holder, int position) {
-        holder.textViewPlate.setText( R.string.plate +": " + vehicles.get( position ).getPlate() );
-        holder.textViewModel.setText( R.string.email +": " + vehicles.get( position ).getModel() );
+    public void onBindViewHolder(VehicleHolder holder, @SuppressLint("RecyclerView") int position) {
+        holder.textViewPlate.setText("Placa: " + vehicles.get(position).getPlate());
+        holder.textViewModel.setText("Modelo: " + vehicles.get(position).getModel());
+        holder.imageViewRowDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( holder.itemView.getContext(), VehicleDetailsActivity.class);
+                intent.putExtra( "vehicle_id", vehicles.get(position).getVehicle_id() );
+                holder.itemView.getContext().startActivity( intent );
+            }
+        });
     }
 
     @Override
@@ -53,11 +66,13 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleH
     class VehicleHolder extends RecyclerView.ViewHolder{
 
         TextView textViewPlate, textViewModel;
+        ImageView imageViewRowDetails;
 
         public VehicleHolder(View itemView){
             super( itemView );
-            textViewPlate = itemView.findViewById( R.id.textViewPlate );
-            textViewModel = itemView.findViewById( R.id.textViewModel );
+            textViewPlate = itemView.findViewById( R.id.texViewPlacaRow );
+            textViewModel = itemView.findViewById( R.id.texViewModelRow );
+            imageViewRowDetails = itemView.findViewById( R.id.imageViewRowDetails );
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

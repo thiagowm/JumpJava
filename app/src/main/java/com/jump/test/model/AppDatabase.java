@@ -195,6 +195,16 @@ public class AppDatabase extends SQLiteOpenHelper {
             String total = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TOTAL));
 
             Vehicle vehicles = new Vehicle(id, vehicle, plate, model, color, type_payment, courtyard, time_enter, time_out, total);
+            vehicles.setVehicle_id( id );
+            vehicles.setVehicle( vehicle );
+            vehicles.setPlate( plate );
+            vehicles.setModel( model );
+            vehicles.setColor( color );
+            vehicles.setType_payment( type_payment );
+            vehicles.setCourtyard( courtyard );
+            vehicles.setTime_enter( time_enter );
+            vehicles.setTime_out( time_out );
+            vehicles.setTotal( total );
             vehiclesList.add( vehicles );
         }
         cursor.close();
@@ -236,7 +246,18 @@ public class AppDatabase extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-        return new Vehicle(id, vehicle, plate, model, color, "", courtyard, time_enter, time_out, total);
+        Vehicle vehicle1 = new Vehicle(id, vehicle, plate, model, color, "", courtyard, time_enter, time_out, total);
+        vehicle1.setVehicle_id( id );
+        vehicle1.setVehicle( vehicle );
+        vehicle1.setPlate( plate );
+        vehicle1.setModel( model );
+        vehicle1.setColor( color );
+        vehicle1.setType_payment( "" );
+        vehicle1.setCourtyard( courtyard );
+        vehicle1.setTime_enter( time_enter );
+        vehicle1.setTime_out( time_out );
+        vehicle1.setTotal( total );
+        return vehicle1;
     }
 
     public List getAllItemsPrice(){
@@ -255,6 +276,12 @@ public class AppDatabase extends SQLiteOpenHelper {
             String typePrice = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE_PRICE));
 
             Items itemsPrices = new Items(itemId, price, period, since, establishmentId, typePrice);
+            itemsPrices.setItemId( itemId );
+            itemsPrices.setPrice( price );
+            itemsPrices.setPeriod( period );
+            itemsPrices.setSince( since );
+            itemsPrices.setEstablishmentId( establishmentId );
+            itemsPrices.setTypePrice( typePrice );
             itemsPriceList.add( itemsPrices );
         }
         cursor.close();

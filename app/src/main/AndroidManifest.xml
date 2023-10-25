@@ -15,6 +15,9 @@
         android:theme="@style/Theme.JumpTest"
         tools:targetApi="31">
         <activity
+            android:name=".VehicleDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".VehicleList"
             android:exported="false"
             android:label="@string/list_vehicles"

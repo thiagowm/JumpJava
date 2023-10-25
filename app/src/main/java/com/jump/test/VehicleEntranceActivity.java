@@ -60,6 +60,7 @@ public class VehicleEntranceActivity extends AppCompatActivity {
                 vehicle.setColor( color );
                 vehicle.setType_payment("0");
                 vehicle.setCourtyard( 1 );
+                vehicle.setTime_enter( current );
                 vehicle.setTime_out( "0" );
                 vehicle.setTotal( "0" );
 
